@@ -1,0 +1,18 @@
+Au-FCC
+    LCHARGE = .FALSE.   # turn off writting of CHGCAR
+    LWAVE = .FALSE.     # turn off writting of WAVECAR
+Electronic Relaxation:
+    ENCUT = 700         # sets PW cutoff (eV)
+    PREC = normal       # default, NGX=1.5Gcut, NGXF=2NGX
+    EDIFF = 1E-04       # energy-stopping criterion for electronic minimization (eV)
+    ALGO = Fast         # 5 initial steps of blocked Davidson followed by RMM-DIIS algorithms
+DOS related values:
+    ISMEAR = 1          # smearing by Methfessel/Paxton method for metals
+    SIGMA = 0.10        # broadening parameter (eV)
+    #ISPIN=2            # spin-polarization switched off
+Ionic Relaxation:
+    NSW = 100           # max number of steps for structural relaxation
+    IBRION = 1          # ionic relaxation using quasi-Newton method
+    ISIF = 7            # moves ions at fixed shape and volume of lattice, calculates forces only
+    ISYM = 1            # use symmetry
+    POTIM = 0.2         # scaling constant for the forces

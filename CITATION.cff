@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Katz"
+    given-names: "Chase"
+    email: ichasekatz@tamu.edu
+    affiliation: Texas A&M University
+title: "md-dft-inputs: LAMMPS lattice generation and VASP input templates"
+version: 0.1.0
+date-released: "2026-09-30"
+url: "https://github.com/ichasekatz/md-dft-inputs"
+license: GPL-3.0-or-later

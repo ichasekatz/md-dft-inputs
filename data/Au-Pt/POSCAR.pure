@@ -1,0 +1,13 @@
+Au-FCC
+4.08                     # FCC lattice parameter(Å) with unit lattice vectors in x, y, z
+1.000000 0.000000 0.000000
+0.000000 1.000000 0.000000
+0.000000 0.000000 1.000000
+Au
+4                         # no. of atoms
+Selective dynamics        # atoms are allowed to relax selectively
+Direct                    # direct lattice with atom positions in x, y, z
+0.000000 0.000000 0.000000 F F F       # F: false (fixed)
+0.500000 0.500000 0.000000 T T T       # T: true (free to move)
+0.500000 0.000000 0.500000 T T T
+0.000000 0.500000 0.500000 T T T
