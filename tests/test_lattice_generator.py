@@ -40,27 +40,25 @@ class TestReadPoscar(TestCase):
             assert 0.0 <= z < 1.0
 
 
-class TestGenerateLammpsData(TestCase):
-    """Tests for generate_lammps_data."""
+def test_output_file_created(tmp_path):
+    """Output file is written to the requested path."""
+    poscar = _DATA / "H2O2.poscar"
+    if not poscar.exists():
+        pytest.skip("H2O2.poscar not present")
+    out = generate_lammps_data(poscar, a=3.97, b=3.97, c=7.49, nx=2, ny=2, nz=1, output_path=tmp_path / "lattice.lammps")
+    assert out.exists()
+    assert out.stat().st_size > 0
 
-    def test_output_file_created(self, tmp_path):
-        """Output file is written to the requested path."""
-        poscar = _DATA / "H2O2.poscar"
-        if not poscar.exists():
-            pytest.skip("H2O2.poscar not present")
-        out = generate_lammps_data(poscar, a=3.97, b=3.97, c=7.49, nx=2, ny=2, nz=1, output_path=tmp_path / "lattice.lammps")
-        assert out.exists()
-        assert out.stat().st_size > 0
 
-    def test_atom_count_matches_supercell(self, tmp_path):
-        """Atom count in output equals unit cell atoms × supercell volume."""
-        poscar = _DATA / "H2O2.poscar"
-        if not poscar.exists():
-            pytest.skip("H2O2.poscar not present")
-        unit_cell = read_poscar(poscar)
-        nx, ny, nz = 2, 2, 2
-        out = generate_lammps_data(poscar, a=3.97, b=3.97, c=7.49, nx=nx, ny=ny, nz=nz, output_path=tmp_path / "lattice.lammps")
-        lines = out.read_text().splitlines()
-        atom_count_line = next(l for l in lines if "atoms" in l and not "atom types" in l)
-        n_atoms = int(atom_count_line.split()[0])
-        assert n_atoms == len(unit_cell) * nx * ny * nz
+def test_atom_count_matches_supercell(tmp_path):
+    """Atom count in output equals unit cell atoms × supercell volume."""
+    poscar = _DATA / "H2O2.poscar"
+    if not poscar.exists():
+        pytest.skip("H2O2.poscar not present")
+    unit_cell = read_poscar(poscar)
+    nx, ny, nz = 2, 2, 2
+    out = generate_lammps_data(poscar, a=3.97, b=3.97, c=7.49, nx=nx, ny=ny, nz=nz, output_path=tmp_path / "lattice.lammps")
+    lines = out.read_text().splitlines()
+    atom_count_line = next(ln for ln in lines if "atoms" in ln and "atom types" not in ln)
+    n_atoms = int(atom_count_line.split()[0])
+    assert n_atoms == len(unit_cell) * nx * ny * nz
